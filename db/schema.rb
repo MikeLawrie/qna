@@ -9,6 +9,10 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
+<<<<<<< bcb486d8690fc828098de7cf0c883c3fec484231
+=======
+
+>>>>>>> Answer model added
 ActiveRecord::Schema.define(version: 20170214092731) do
 
   # These are extensions that must be enabled in order to support this database
