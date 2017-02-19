@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let(:question) { create(:question)}
   describe 'GET #index' do
-    let(:questions) { create_list(:question,2) } 
+    let(:questions) { create_list(:question,2) }
 
   let(:question) { create(:question)}
   describe 'GET #index' do
@@ -53,5 +54,4 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to render_template :edit
     end    
   end
-
 end
