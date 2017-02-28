@@ -15,6 +15,6 @@ feature 'Create answer', %q{
     visit question_path(question)
     click_on 'Answer'
     fill_in 'Body', with: 'text text'
- 
+    click_on 'Create' 
   end
 end
