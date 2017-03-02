@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: [:new, :que]
+  before_action :set_question, only: [:new, :create]
+  before_action :set_answer, only: [:show]
 
   def new
     @answer = Answer.new
@@ -13,6 +14,10 @@ class AnswersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
+        
   end    
 
   private 
@@ -23,6 +28,10 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:question, :body)
+  end
+
+  def set_answer
+    @answer = Answer.find(params[:id])    
   end  
 
 end
