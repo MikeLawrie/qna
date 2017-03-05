@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
  
   let(:question) { create(:question)}
+  let(:answer) { question.answers.create(attributes_for(:answer))}
 
   describe 'GET #new' do
 
@@ -27,26 +28,28 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
+      let(:create_answer) { post :create, params: { question_id: question.id , answer: attributes_for(:answer)}}  
       it 'saves the new answer in the database'  do
-        expect { post :create, params: { question_id: question.id , answer: {body: 'text text', question_id: question.id } }}.to change(Answer, :count).by(1)
+        expect { create_answer }.to change(Answer, :count).by(1)
       end
       it 'redirects to show view' do
-        post :create, params: { question_id: question.id , answer: {body: 'text text', question_id: question.id } }
-        expect(response).to redirect_to answer_path(assigns(:answer))
+        create_answer
+        expect(response).to redirect_to question_path(answer.question)
       end
     end  
     
-    context 'with invalid attributes' do  
+    context 'with invalid attributes' do
+      let(:create_invalid_answer) { post :create, params: {question_id: question.id , answer: attributes_for(:invalid_answer) } }      
       it 'does not save the question' do
-        expect { post :create, params: { question_id: question.id , answer: attributes_for(:invalid_answer) }}.to_not change(Answer, :count)        
+        expect { create_invalid_answer }.to_not change(Answer, :count)       
       end
       
       it 're-renders new view' do
-        post :create, params: { question_id: question.id , answer: attributes_for(:invalid_answer) }
+        create_invalid_answer 
         expect(response).to render_template :new
       end
     end
   end
-
-
 end
+
+

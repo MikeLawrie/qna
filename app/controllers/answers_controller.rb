@@ -1,16 +1,17 @@
 class AnswersController < ApplicationController
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, only: [:show]
+  before_action :authenticate_user!, except: [:index, :show]  
 
   def new
-    @answer = Answer.new
+    @answer = @question.answers.new
   end
 
   def create
-    @answer = Answer.create(answer_params)
+    @answer = @question.answers.new(answer_params)
     
     if @answer.save
-      redirect_to @answer, notice: "Your answer successfully created."   
+      redirect_to @question, notice: "Your answer successfully created."   
     else
       render :new
     end
@@ -27,7 +28,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:question_id, :body)
+    params.require(:answer).permit(:body)
   end
 
   def set_answer
